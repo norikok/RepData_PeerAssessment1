@@ -37,7 +37,7 @@ names <- names(data)
 data$date <- as.Date(data$date)
 ```
 
-The data set was loaded at 2014-09-14 15:21:52. It consists of 17,568 rows corresponding to 61 days and the following fields: steps, date, interval.
+The data set was loaded at 2014-09-14 16:21:59. It consists of 17,568 rows corresponding to 61 days and the following fields: steps, date, interval.
 
 
 ## What is mean total number of steps taken per day?
@@ -135,41 +135,25 @@ The histogram depicts the distribution of the data when the missing values are f
 - **mean** total number of steps taken per day is 10,766.19.
 - **median** total number of steps taken per day is 10,766.19.
 
-Since
+Since the dates with all missing values were dropped from the histogram previously and those dates were populated with mean values for each interval, it makes sense that all newly added dates contributed to the middle of the histogram.  In the same vain, since the mean and the median did not change significantly and the new median reflects the mass added to the middle.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
+1. Create a new factor variable with two levels - "weekday" and "weekend".
+2. Calculate the mean (across all weekdays and weekends) number of steps taken for each 5-minute interval.
+3. Make a panel plot containing a time series plot of 5-minute interval and mean number of steps taken (i.e. plot numbers calculated in step 2).
 
 
-```r
-#data_notmissing <- data[!is.na(data$steps),]
-#daily_steps <- tapply(data_notmissing$steps, data_notmissing$date, sum)
-sum(data[!is.na(data$steps), "steps"])
-```
-
-```
-## [1] 570608
-```
 
 ```r
-sum(daily_steps[!is.na(daily_steps$steps), "steps"])
-```
-
-```
-## [1] 570608
-```
-
-```r
-sum(pattern$steps)*53
-```
-
-```
-## [1] 570608
-```
-
-```r
-nas <- data[is.na(data$steps),]
-nas <- cbind(nas, 1)
-names(nas) <- c("steps", "date", "interval", "ind")
+weekday_factor <- cbind(weekdays(data$date), "weekday")
+weekday_factor[weekday_factor[, 1] == "Saturday", 2] <- "weekend"
+weekday_factor[weekday_factor[, 1] == "Sunday", 2] <- "weekend"
+data_week <- cbind(data, weekday_factor[, 2])
+names(data_week) <- c("steps", "date", "interval", "factor")
+pattern_week <- aggregate(data_week$steps,
+                          by = list(data_week$interval, data_week$factor),
+                          FUN = mean, na.rm = TRUE)
+names(pattern_week) <- c("interval", "factor", "steps")
 ```

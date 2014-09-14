@@ -231,7 +231,7 @@ names &lt;- names(data)
 data$date &lt;- as.Date(data$date)
 </code></pre>
 
-<p>The data set was loaded at 2014-09-14 15:21:52. It consists of 17,568 rows corresponding to 61 days and the following fields: steps, date, interval.</p>
+<p>The data set was loaded at 2014-09-14 16:21:59. It consists of 17,568 rows corresponding to 61 days and the following fields: steps, date, interval.</p>
 
 <h2>What is mean total number of steps taken per day?</h2>
 
@@ -329,33 +329,25 @@ median_filled_steps &lt;- format(median(filled_steps$steps, na.rm = TRUE),
 <li><strong>median</strong> total number of steps taken per day is 10,766.19.</li>
 </ul>
 
-<p>Since</p>
+<p>Since the dates with all missing values were dropped from the histogram previously and those dates were populated with mean values for each interval, it makes sense that all newly added dates contributed to the middle of the histogram.  In the same vain, since the mean and the median did not change significantly and the new median reflects the mass added to the middle.</p>
 
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 
-<pre><code class="r">#data_notmissing &lt;- data[!is.na(data$steps),]
-#daily_steps &lt;- tapply(data_notmissing$steps, data_notmissing$date, sum)
-sum(data[!is.na(data$steps), &quot;steps&quot;])
-</code></pre>
+<ol>
+<li>Create a new factor variable with two levels - &ldquo;weekday&rdquo; and &ldquo;weekend&rdquo;.</li>
+<li>Calculate the mean (across all weekdays and weekends) number of steps taken for each 5-minute interval.</li>
+<li>Make a panel plot containing a time series plot of 5-minute interval and mean number of steps taken (i.e. plot numbers calculated in step 2).</li>
+</ol>
 
-<pre><code>## [1] 570608
-</code></pre>
-
-<pre><code class="r">sum(daily_steps[!is.na(daily_steps$steps), &quot;steps&quot;])
-</code></pre>
-
-<pre><code>## [1] 570608
-</code></pre>
-
-<pre><code class="r">sum(pattern$steps)*53
-</code></pre>
-
-<pre><code>## [1] 570608
-</code></pre>
-
-<pre><code class="r">nas &lt;- data[is.na(data$steps),]
-nas &lt;- cbind(nas, 1)
-names(nas) &lt;- c(&quot;steps&quot;, &quot;date&quot;, &quot;interval&quot;, &quot;ind&quot;)
+<pre><code class="r">weekday_factor &lt;- cbind(weekdays(data$date), &quot;weekday&quot;)
+weekday_factor[weekday_factor[, 1] == &quot;Saturday&quot;, 2] &lt;- &quot;weekend&quot;
+weekday_factor[weekday_factor[, 1] == &quot;Sunday&quot;, 2] &lt;- &quot;weekend&quot;
+data_week &lt;- cbind(data, weekday_factor[, 2])
+names(data_week) &lt;- c(&quot;steps&quot;, &quot;date&quot;, &quot;interval&quot;, &quot;factor&quot;)
+pattern_week &lt;- aggregate(data_week$steps,
+                          by = list(data_week$interval, data_week$factor),
+                          FUN = mean, na.rm = TRUE)
+names(pattern_week) &lt;- c(&quot;interval&quot;, &quot;factor&quot;, &quot;steps&quot;)
 </code></pre>
 
 </body>

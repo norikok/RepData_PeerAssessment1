@@ -120,4 +120,19 @@ Since the dates with all missing values were dropped from the histogram previous
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
+1. Create a new factor variable with two levels - "weekday" and "weekend".
+2. Calculate the mean (across all weekdays and weekends) number of steps taken for each 5-minute interval.
+3. Make a panel plot containing a time series plot of 5-minute interval and mean number of steps taken (i.e. plot numbers calculated in step 2).
 
+
+```{r difference}
+weekday_factor <- cbind(weekdays(data$date), "weekday")
+weekday_factor[weekday_factor[, 1] == "Saturday", 2] <- "weekend"
+weekday_factor[weekday_factor[, 1] == "Sunday", 2] <- "weekend"
+data_week <- cbind(data, weekday_factor[, 2])
+names(data_week) <- c("steps", "date", "interval", "factor")
+pattern_week <- aggregate(data_week$steps,
+                          by = list(data_week$interval, data_week$factor),
+                          FUN = mean, na.rm = TRUE)
+names(pattern_week) <- c("interval", "factor", "steps")
+```
