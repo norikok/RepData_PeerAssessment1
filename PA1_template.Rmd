@@ -135,4 +135,7 @@ pattern_week <- aggregate(data_week$steps,
                           by = list(data_week$interval, data_week$factor),
                           FUN = mean, na.rm = TRUE)
 names(pattern_week) <- c("interval", "factor", "steps")
+pattern_week$factor <- factor(pattern_week$factor)
+xyplot(steps ~ interval | factor, data = pattern_week, layout = c(1, 2),
+       type = "l")
 ```
