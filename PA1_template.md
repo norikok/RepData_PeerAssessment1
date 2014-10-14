@@ -37,7 +37,7 @@ names <- names(data)
 data$date <- as.Date(data$date)
 ```
 
-The data set was loaded at 2014-09-14 16:39:00. It consists of 17,568 rows corresponding to 61 days and the following fields: steps, date, interval.
+The data set was loaded at 2014-10-14 05:29:01. It consists of 17,568 rows corresponding to 61 days and the following fields: steps, date, interval.
 
 
 ## What is mean total number of steps taken per day?
@@ -157,7 +157,8 @@ pattern_week <- aggregate(data_week$steps,
                           FUN = mean, na.rm = TRUE)
 names(pattern_week) <- c("interval", "factor", "steps")
 pattern_week$factor <- factor(pattern_week$factor)
-xyplot(steps ~ interval | factor, data = pattern_week, layout = c(1, 2), type = "l")
+xyplot(steps ~ interval | factor, data = pattern_week, layout = c(1, 2),
+       type = "l")
 ```
 
 ![plot of chunk difference](figure/difference.png) 
