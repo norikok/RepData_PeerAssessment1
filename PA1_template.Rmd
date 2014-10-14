@@ -88,7 +88,6 @@ The 5-minute interval with the largest number of steps on average was interval `
 1. Calculate the total number of missing values in the dataset.
 2. Devise a strategy for filling in the missing values.
 3. Create a new dataset with the missing values filled in (using the strategy identified in step 2).
-4. 
 
 ```{r impute}
 nrows_na <- format(sum(is.na(data$steps)), big.mark = ",")

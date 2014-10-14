@@ -37,7 +37,7 @@ names <- names(data)
 data$date <- as.Date(data$date)
 ```
 
-The data set was loaded at 2014-10-14 05:29:01. It consists of 17,568 rows corresponding to 61 days and the following fields: steps, date, interval.
+The data set was loaded at 2014-10-14 05:31:47. It consists of 17,568 rows corresponding to 61 days and the following fields: steps, date, interval.
 
 
 ## What is mean total number of steps taken per day?
@@ -102,7 +102,6 @@ The 5-minute interval with the largest number of steps on average was interval 8
 1. Calculate the total number of missing values in the dataset.
 2. Devise a strategy for filling in the missing values.
 3. Create a new dataset with the missing values filled in (using the strategy identified in step 2).
-4. 
 
 
 ```r

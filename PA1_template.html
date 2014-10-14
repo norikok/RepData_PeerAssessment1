@@ -231,7 +231,7 @@ names &lt;- names(data)
 data$date &lt;- as.Date(data$date)
 </code></pre>
 
-<p>The data set was loaded at 2014-10-14 05:29:01. It consists of 17,568 rows corresponding to 61 days and the following fields: steps, date, interval.</p>
+<p>The data set was loaded at 2014-10-14 05:31:47. It consists of 17,568 rows corresponding to 61 days and the following fields: steps, date, interval.</p>
 
 <h2>What is mean total number of steps taken per day?</h2>
 
@@ -295,7 +295,6 @@ interval_min &lt;- interval_max_steps %% 100
 <li>Calculate the total number of missing values in the dataset.</li>
 <li>Devise a strategy for filling in the missing values.</li>
 <li>Create a new dataset with the missing values filled in (using the strategy identified in step 2).</li>
-<li></li>
 </ol>
 
 <pre><code class="r">nrows_na &lt;- format(sum(is.na(data$steps)), big.mark = &quot;,&quot;)
